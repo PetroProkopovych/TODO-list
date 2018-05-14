@@ -1,0 +1,303 @@
+@import "normalize";
+
+// colors
+$primaryColor: #bf3142;
+$secondaryColor: #222;
+$backgroundColor: #eee;
+
+// screen sizes
+$size-sm: 768px;
+$size-md: 992px;
+$size-ld: 1200px;
+
+// mixins for media queries
+@mixin phone {
+  @media (max-width: $size-sm - 1px) {
+    @content;
+  }
+}
+@mixin tablet{
+  @media (min-width: $size-sm) and (max-width: $size-md - 1px){
+    @content;
+  }
+}
+@mixin desktop{
+  @media (min-width: $size-md) and (max-width: $size-ld - 1px){
+    @content;
+  }
+}
+@mixin large-desktop{
+  @media (min-width: $size-ld){
+    @content;
+  }
+}
+
+// common styles
+html {
+  height: 100%;
+  min-width: $size-sm;
+}
+
+body {
+  background: $backgroundColor;
+  font-family: 'Roboto', sans-serif;
+  color: $secondaryColor;
+  font-size: 15px;
+  line-height: 140%;
+  height: 100%;
+  overflow: auto;
+  min-width: $size-sm;
+
+  * {
+    box-sizing: border-box;
+  }
+
+  img {
+    display: inline-block;
+  }
+
+  textarea, input, select {
+    padding: 10px;
+    border: 1px solid rgba($secondaryColor, 0.2);
+    border-radius: 3px;
+    color: $secondaryColor;
+    font-size: 16px;
+
+    &:focus {
+      outline: none;
+      border: 1px solid rgba($secondaryColor, 0.5);
+    }
+  }
+
+  textarea {
+    resize: none;
+  }
+
+  a {
+    color: $secondaryColor;
+    text-decoration: none;
+
+    &:hover {
+      cursor: pointer;
+    }
+
+    &:hover, &:focus {
+      text-decoration: none;
+      color: inherit;
+      outline: none;
+    }
+  }
+
+  button, input[type=submit] {
+    padding: 7px 10px;
+    display: block;
+    background: $primaryColor;
+    color: white;
+    text-align: center;
+    border: 1px solid transparent;
+    border-radius: 3px;
+
+    &:hover, &:focus {
+      text-decoration: none;
+      outline: none;
+      background: mix($primaryColor, $secondaryColor, 90%);
+    }
+  }
+
+  ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  p {
+    margin: 0;
+    padding: 0;
+    line-height: 140%;
+  }
+
+  h4 {
+    font-size: 18px;
+    margin: 0;
+  }
+
+  .checkbox-container {
+    display: block;
+    position: relative;
+    padding: 20px 0 0 20px;
+    margin: 0 0 5px 5px;
+    cursor: pointer;
+
+    &:hover {
+      .checkmark {
+        background: #ddd;
+      }
+    }
+
+    input {
+      display: none;
+
+      &:checked ~ .checkmark:after {
+        display: block;
+      }
+    }
+
+    .checkmark {
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 20px;
+      width: 20px;
+      border-radius: 3px;
+      background-color: #eee;
+
+      &:after {
+        content: "\2713";
+        position: absolute;
+        display: none;
+        left: 0;
+        top: 1px;
+        font-size: 25px;
+        color: rgba($secondaryColor, 0.8);
+      }
+    }
+  }
+
+
+  header {
+    background: $secondaryColor;
+    height: 50px;
+
+    .logo {
+      float: left;
+
+      span {
+        color: white;
+        line-height: 50px;
+        font-style: italic;
+        font-size: 18px;
+      }
+    }
+
+    .right {
+      float: right;
+
+      button {
+        margin-top: 6px;
+      }
+    }
+  }
+
+  main {
+    padding: 20px 0;
+
+    .column {
+      float: left;
+
+      &:nth-of-type(1) {
+        border-right: 1px solid rgba($secondaryColor, 0.2);
+      }
+
+      &.today {
+        .task-list .task .checkbox-container {
+          display: block;
+        }
+      }
+
+      h4 {
+        border-bottom: 1px solid rgba($secondaryColor, 0.2);
+        padding: 0 0 5px 15px;
+      }
+
+      .task-list {
+        padding: 10px 10px 200px 10px;
+        min-height: calc(100vh - 115px);
+        width: 370px;
+
+        @include tablet {
+          width: 350px;
+        }
+
+        @include phone {
+          width: 350px;
+        }
+
+        .task {
+          display: block;
+          width: 350px;
+          padding: 10px;
+          background: white;
+          border: 1px solid rgba($secondaryColor, 0.15);
+          border-radius: 3px;
+          margin-bottom: 10px;
+          user-select: none;
+
+          @include tablet {
+            width: 330px;
+          }
+
+          @include phone {
+            width: 330px;
+          }
+
+          &:hover {
+            cursor: pointer;
+          }
+
+          .checkbox-container {
+            float: right;
+            display: none;
+          }
+        }
+      }
+    }
+
+    .modal {
+      position: fixed;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 100;
+      background: rgba($secondaryColor, 0.7);
+
+      &.open {
+        display: block;
+      }
+
+      form {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -70%);
+        background: white;
+        padding: 15px 20px;
+        border: 1px solid transparent;
+        border-radius: 3px;
+
+        h4 {
+          margin-bottom: 20px;
+          padding-left: 5px;
+        }
+
+        textarea {
+          width: 350px;
+          margin-bottom: 15px;
+          display: block;
+        }
+
+        input[type=submit] {
+          float: right;
+        }
+
+        .close {
+          position: absolute;
+          display: block;
+          top: 0;
+          right: 0;
+          padding: 8px 10px;
+        }
+      }
+    }
+  }
+}
